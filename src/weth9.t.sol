@@ -171,7 +171,7 @@ contract WETH9Test is DSTest, WETHEvents {
 
     function perform_join(Guy guy, uint wad) public {
         emit Join(address(guy), wad);
-        guy.join.value(wad)();
+        guy.join{value: wad}();
     }
 
     function perform_exit(Guy guy, uint wad) public {
@@ -215,14 +215,14 @@ contract Guy {
     }
 
     function join() payable public {
-        weth.join.value(msg.value)();
+        weth.join{value: msg.value}();
     }
 
     function exit(uint wad) public {
         weth.exit(wad);
     }
 
-    function () external payable {
+    receive () external payable {
     }
 
     function transfer(Guy dst, uint wad) public {
